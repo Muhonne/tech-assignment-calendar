@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  --black: rgba(0,0,0,0.8);
+  --green: rgb(93, 175, 116);
+  --white: rgb(255, 255, 255);
+}
+
+@theme inline {
+  --font-fjallaone: "Fjalla One";
+  --font-librefranklin: "Libre Franklin"
+  --font-worksans: "Work Sans"
+}
+
+h1{
+  font-family: "Fjalla One";
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.3;
+}
+
+h2{
+  font-family: "Libre Franklin";
+  font-weight: 700;
+  font-size: 64px;
+}
+
+h3{
+  font-family: "Libre Franklin";
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+th{
+  font-family: "Work Sans";
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.bg-black{
+  background-color: var(--black);
+}
+.bg-green{
+  background-color: var(--green);
+}
+.bg-white{
+  background-color: var(--white);
+}
+
+.black{
+  color: var(--black);
+}
+.green{
+  color: var(--green);
+}
+.white{
+  color: var(--white);
+}
