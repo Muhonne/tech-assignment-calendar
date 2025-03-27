@@ -14,32 +14,36 @@
   --font-worksans: "Work Sans"
 }
 
+
+/**
+Text styles
+*/
 h1{
   font-family: "Fjalla One";
   font-weight: 700;
   font-size: 48px;
   line-height: 1.3;
 }
-
 h2{
   font-family: "Libre Franklin";
   font-weight: 700;
   font-size: 64px;
 }
-
 h3{
   font-family: "Libre Franklin";
   font-weight: 400;
   font-size: 10px;
   line-height: 1.2;
 }
-
 th{
   font-family: "Work Sans";
   font-weight: 700;
   font-size: 16px;
 }
 
+/**
+Color styles
+*/
 .bg-black{
   background-color: var(--black);
 }
@@ -58,4 +62,34 @@ th{
 }
 .white{
   color: var(--white);
+}
+
+/*
+* Month styles eyeballed to "close-enough" from .png
+* all in pixels because spec in pixels
+*/
+table{
+  margin: 50px; /* TODO: delete this dev style */
+  border: 4px solid var(--green);
+  /*
+  design.png looks like there's some shadow so here's something via cssmatic.com/box-shadow
+  */
+  -webkit-box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+  -moz-box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.3);
+}
+th{
+  border: 2px solid var(--green);
+  padding: 12px 0;
+}
+.day-container{
+  height: 120px;
+  width: 160px;
+  padding: 0 10px;
+}
+.current-day{
+  background-color: var(--green);
+  & h2, h3{
+    color: var(--white)
+  }
 }
