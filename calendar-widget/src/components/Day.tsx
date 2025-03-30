@@ -1,14 +1,14 @@
 export default function Day({
-  date,
+  day,
   session,
 }: {
-  date: number | null;
+  day: number | null;
   session: string;
 }) {
   return (
     <div className="day-container">
-      <h2>{date === null ? <span>&nbsp;</span> : date}</h2>
-      <h3>{(date !== null && session.toUpperCase()) || <span>&nbsp;</span>}</h3>
+      <h2>{day === null ? <span>&nbsp;</span> : day}</h2>
+      <h3>{(day !== null && session.toUpperCase()) || <span>&nbsp;</span>}</h3>
     </div>
   );
 }
