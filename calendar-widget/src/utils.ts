@@ -10,7 +10,7 @@ export function getMonthIndexes(today: Date): MonthLayoutIndexes {
   const firstDate = startOfMonth(today);
   const firstISODay = getISODay(firstDate);
   const dayCount = getDaysInMonth(today);
-
+  
   return {
     firstISODay,
     dayCount,
