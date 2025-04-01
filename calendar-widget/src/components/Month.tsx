@@ -1,9 +1,16 @@
+import { ProgramSchedule } from "@/types";
 import Day from "./Day";
-import { getCalendarMatrix, getMonthIndexes } from "@/utils";
+import { getCalendarMatrix } from "@/utils";
 
-export default function Month({ date }: { date: Date }) {
-  const {firstISODay, dayCount} = getMonthIndexes(date)
-  const monthLayout = getCalendarMatrix(firstISODay, dayCount)
+export default function Month({
+  date,
+  program,
+}: {
+  date: Date;
+  program: ProgramSchedule;
+}) {
+  const { monthLayout, programLayout } = getCalendarMatrix(date, program);
+
   return (
     <table>
       <thead>
@@ -33,10 +40,8 @@ export default function Month({ date }: { date: Date }) {
                     className={date.getDate() === day ? "current-day" : ""}
                   >
                     <Day
-                      day={day}
-                      session={
-                        j === 4 ? "Introduction to the program" : "Bambalam"
-                      }
+                      day={monthLayout[i][j]}
+                      session={programLayout[i] && programLayout[i][j]}
                     />
                   </th>
                 );
