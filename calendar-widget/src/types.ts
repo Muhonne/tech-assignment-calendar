@@ -23,13 +23,13 @@ export enum WeekdayEnum {
   SUNDAY = 6,
 }
 
-export interface Session {
+export interface Activity {
   weekday: Weekday;
   title: string;
   completed: boolean;
 }
 
 export type WeekKey = `week${number}`;
-export type ProgramSchedule = Record<WeekKey, Session[]>;
+export type ProgramSchedule = Record<WeekKey, Activity[]>;
 
-export type ProgramLayout = Array<null | Array<undefined | Session>>;
+export type ProgramLayout = Array<null | Array<undefined | Activity>>;

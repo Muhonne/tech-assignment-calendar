@@ -4,18 +4,10 @@ import {
   MonthLayoutIndexes,
   ProgramLayout,
   ProgramSchedule,
-  Session,
+  Activity,
   WeekdayEnum,
   WeekKey,
 } from "./types";
-
-/**
- * Assuming date-fns deals with
- * - locale differences like start of week sun|mon
- * - leap years etc.
- */
-
-export const MISSED_SESSION = "MISSED_SESSION";
 
 export function getMonthIndexes(today: Date): MonthLayoutIndexes {
   const firstDate = startOfMonth(today);
@@ -27,6 +19,11 @@ export function getMonthIndexes(today: Date): MonthLayoutIndexes {
   };
 }
 
+/**
+ *
+ * @param date today
+ * @returns 2d matrix with day numbers
+ */
 export function getMonthLayout(date: Date) {
   const { firstISODay, dayCount } = getMonthIndexes(date);
   const monthLayout: MonthLayout = [];
@@ -35,12 +32,15 @@ export function getMonthLayout(date: Date) {
     monthLayout[w] = [];
     for (let d = 0; d < 7; d++) {
       if (w === 0 && d >= firstISODay - 1) {
+        // first week does not always start from monday
         monthLayout[w][d] = dayIndex;
         dayIndex++;
       } else if (w > 0 && dayIndex <= dayCount) {
+        // fill out the rest of the weeks until end of days
         monthLayout[w][d] = dayIndex;
         dayIndex++;
       } else {
+        // last week does not always end in sunday
         monthLayout[w][d] = null;
       }
     }
@@ -48,6 +48,13 @@ export function getMonthLayout(date: Date) {
   return monthLayout;
 }
 
+/**
+ *
+ * @param program from api
+ * @param month 2d matrix
+ * @param day today
+ * @returns 2d matrix of sessions, matching indexes to month
+ */
 export function getProgramLayout(
   program: ProgramSchedule,
   month: MonthLayout,
@@ -62,40 +69,55 @@ export function getProgramLayout(
     weekIndex = 1;
   }
 
-  // unfinished sessions pushed to next date
-  const rollOverSessions: Session[] = [];
+  // unfinished sessions pushed to today and onwards
+  const rollOverActivities: Activity[] = [];
 
   // assume data is ordered and in correct format
   Object.keys(program).forEach((weekKey) => {
     programLayout[weekIndex] = new Array(7);
     program[weekKey as WeekKey].forEach((session) => {
-      const pastDay = month[weekIndex][WeekdayEnum[session.weekday]]! < day;
-      if (pastDay) {
-        if (session.completed) {
-          programLayout[weekIndex]![WeekdayEnum[session.weekday]] = session;
+      // session day exist on the month
+      if (
+        Array.isArray(month[weekIndex]) &&
+        Number.isInteger(WeekdayEnum[session.weekday]) &&
+        Number.isInteger(month[weekIndex][WeekdayEnum[session.weekday]])
+      ) {
+        if (month[weekIndex][WeekdayEnum[session.weekday]]! < day) {
+          // past days might have rollovers
+          if (session.completed) {
+            programLayout[weekIndex]![WeekdayEnum[session.weekday]] = session;
+          } else if (!session.completed) {
+            rollOverActivities.push(session);
+          }
         } else {
-          programLayout[weekIndex]![WeekdayEnum[session.weekday]] = {
-            ...session,
-            title: MISSED_SESSION,
-          };
-          rollOverSessions.push(session);
+          // future days placed normally, rollovers handled in rendering Month
+          programLayout[weekIndex]![WeekdayEnum[session.weekday]] = session;
         }
-      } else if (rollOverSessions.length > 0) {
-        programLayout[weekIndex]![WeekdayEnum[session.weekday]] =
-          rollOverSessions[0];
-        rollOverSessions.splice(0, 1);
-        rollOverSessions.push(session);
       } else {
-        programLayout[weekIndex]![WeekdayEnum[session.weekday]] = session;
+        console.warn(
+          `Theres a session that is not on the month, week ${weekIndex} ${JSON.stringify(
+            session
+          )}`
+        );
       }
     });
     weekIndex++;
   });
-  return programLayout;
+  return { programLayout, rollOverActivities };
 }
 
+/**
+ * Perhaps unnecessary helper function but clean interfaces are nice
+ * @param date today
+ * @param program schedule from api
+ * @returns 2d matrixes for rendering the schedule on a month
+ */
 export function getCalendarMatrix(date: Date, program: ProgramSchedule) {
   const monthLayout = getMonthLayout(date);
-  const programLayout = getProgramLayout(program, monthLayout, date.getDate());
-  return { monthLayout, programLayout };
+  const { programLayout, rollOverActivities } = getProgramLayout(
+    program,
+    monthLayout,
+    date.getDate()
+  );
+  return { monthLayout, programLayout, rollOverActivities };
 }

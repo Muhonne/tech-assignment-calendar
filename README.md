@@ -1,12 +1,26 @@
 # Implementation
-Is in calendar-widget/ folder. It's a next js project set up with `npx create-next-app@latest calendar-widget`
+Is in calendar-widget/ folder. It's a Next.js project set up with `npx create-next-app@latest calendar-widget`
 Check the readme there for more details but to get started with dev:
 - Have node and npm
 - `cd calendar-widget`
 - `npm i`
 - `npm run dev`
+- to run unit tests `npm run test`
+- server-side debugging set up with vs code
 
+## Design details
+- The whole implementation relies on the month table being a 2d matrix with weeks and days (might be simpler to flatten into one array for setting the program).
+- Some comments added to improve readability as the code related to matrix indexes is what it is
+- There is a fair bit of looping and this is the first draft so there may be performance improvements to be made but I tried to avoid looping things more than once.
+- Test coverage needs improvement but core logic appears to work
+- There is a bit of a playgound for manipulating data/props in index.tsx, have at it
+- some assumptions were made, comments added where applicable
+- No copilot was used. ChatGPT was used to generate some types from json and tests.
+- Overall the code is now in a state where I would ask for comments and continue to improve tests.
+
+---
 Continue reading for specification.
+---
 
 # Frontend Assignment
 

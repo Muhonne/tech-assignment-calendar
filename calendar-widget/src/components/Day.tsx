@@ -1,26 +1,19 @@
-import { Session } from "@/types";
-import { MISSED_SESSION } from "@/utils";
+import { Activity } from "@/types";
 
 export default function Day({
   day,
   session,
 }: {
   day: number | null;
-  session: Session | null | undefined;
+  session: Activity | null | undefined;
 }) {
-  const hasSession = session !== null && session !== undefined;
+  const hasActivity = session !== null && session !== undefined;
   return (
     <div className={"day-container"}>
-      <h2 className={hasSession ? "green" : ""}>
+      <h2 className={hasActivity ? "green" : ""}>
         {day === null ? <span>&nbsp;</span> : day}
       </h2>
-      <h3>
-        {session && session.title === MISSED_SESSION ? (
-          <span>&nbsp;</span>
-        ) : (
-          session?.title
-        )}
-      </h3>
+      <h3>{session ? session.title : <span>&nbsp;</span>}</h3>
     </div>
   );
 }

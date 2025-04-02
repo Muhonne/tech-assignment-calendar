@@ -9,8 +9,11 @@ export default function Month({
   date: Date;
   program: ProgramSchedule;
 }) {
-  const { monthLayout, programLayout } = getCalendarMatrix(date, program);
-
+  const { monthLayout, programLayout, rollOverActivities } = getCalendarMatrix(
+    date,
+    program
+  );
+  const mutableRollOver = structuredClone(rollOverActivities);
   return (
     <table>
       <thead>
@@ -34,15 +37,28 @@ export default function Month({
           return (
             <tr key={"week" + i}>
               {week.map((day, j) => {
+                const currentDate = date.getDate() === day;
+                const rollOverTime = day !== null && date.getDate() <= day;
+                let session;
+                if (programLayout[i] && programLayout[i][j])
+                  // normal case
+                  session = programLayout[i][j];
+                if (rollOverTime) {
+                  if (mutableRollOver.length > 0) {
+                    // rollover case, push todays session to be last rollover
+                    session = mutableRollOver[0];
+                    mutableRollOver.splice(0, 1);
+                    if (programLayout[i] && programLayout[i][j])
+                      mutableRollOver.push(programLayout[i][j]);
+                  }
+                }
+
                 return (
                   <th
                     key={day + "" + j}
-                    className={date.getDate() === day ? "current-day" : ""}
+                    className={currentDate ? "current-day" : ""}
                   >
-                    <Day
-                      day={monthLayout[i][j]}
-                      session={programLayout[i] && programLayout[i][j]}
-                    />
+                    <Day day={monthLayout[i][j]} session={session} />
                   </th>
                 );
               })}

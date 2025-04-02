@@ -1,0 +1,80 @@
+{
+  "week1": [{
+    "weekday": "MONDAY",
+    "title": "The Meru Health Program",
+    "completed": true
+  }, {
+    "weekday": "WEDNESDAY",
+    "title": "Introduction to the Program",
+    "completed": true
+  }, {
+    "weekday": "FRIDAY",
+    "title": "The Science Behind Mindfulness",
+    "completed": true
+  }],
+  "week2": [{
+    "weekday": "MONDAY",
+    "title": "Mind on Autopilot",
+    "completed": true
+  }, {
+    "weekday": "WEDNESDAY",
+    "title": "Mindful Presence",
+    "completed": false
+  }, {
+    "weekday": "FRIDAY",
+    "title": "Consequences of Autopilot",
+    "completed": false
+  }],
+  "week3": [{
+    "weekday": "MONDAY",
+    "title": "The Negativity Spiral",
+    "completed": false
+  }, {
+    "weekday": "WEDNESDAY",
+    "title": "Spiral of Negative Interpretations",
+    "completed": false
+  }, {
+    "weekday": "FRIDAY",
+    "title": "Interrupting the Negativity Spiral",
+    "completed": false
+  }],
+  "week4": [{
+    "weekday": "TUESDAY",
+    "title": "This might be the last week",
+    "completed": false
+  }, {
+    "weekday": "WEDNESDAY",
+    "title": "Or it might not",
+    "completed": false
+  }, {
+    "weekday": "THURSDAY",
+    "title": "Play around with months",
+    "completed": false
+  }],
+  "week5": [{
+    "weekday": "TUESDAY",
+    "title": "Lorem ipsum",
+    "completed": false
+  }, {
+    "weekday": "WEDNESDAY",
+    "title": "Dolor est nomen",
+    "completed": false
+  }, {
+    "weekday": "THURSDAY",
+    "title": "Quies custodied ipses custodes",
+    "completed": false
+  }],
+  "week6": [{
+    "weekday": "TUESDAY",
+    "title": "You should get a warning about me",
+    "completed": false
+  }, {
+    "weekday": "WEDNESDAY",
+    "title": "I too am out of bounds",
+    "completed": false
+  }, {
+    "weekday": "THURSDAY",
+    "title": "Lazy brown fox",
+    "completed": false
+  }]
+}

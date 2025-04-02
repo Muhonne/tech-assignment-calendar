@@ -1,10 +1,5 @@
 import { ProgramSchedule } from "@/types";
-import {
-  getMonthLayout,
-  getMonthIndexes,
-  getProgramLayout,
-  MISSED_SESSION,
-} from "@/utils";
+import { getMonthLayout, getMonthIndexes, getProgramLayout } from "@/utils";
 import "@testing-library/jest-dom";
 
 /**
@@ -129,7 +124,8 @@ describe("utils - getProgramLayout", () => {
         },
       ],
     };
-    expect(getProgramLayout(program, monthLayout, 17)).toEqual([
+    const { programLayout } = getProgramLayout(program, monthLayout, 17);
+    expect(programLayout).toEqual([
       [],
       [
         {
@@ -186,7 +182,19 @@ describe("utils - getProgramLayout", () => {
         },
       ],
     };
-    expect(getProgramLayout(program2, monthLayout, 17)).toEqual([
+    const { programLayout, rollOverActivities } = getProgramLayout(
+      program2,
+      monthLayout,
+      17
+    );
+    expect(rollOverActivities).toEqual([
+      {
+        weekday: "MONDAY",
+        title: "Mind on Autopilot",
+        completed: false,
+      },
+    ]);
+    expect(programLayout).toEqual([
       [],
       [
         {
@@ -199,17 +207,15 @@ describe("utils - getProgramLayout", () => {
         ,
         ,
         ,
-      ],
-      [
-        { weekday: "MONDAY", title: MISSED_SESSION, completed: false },
-        ,
-        ,
-        ,
-        ,
         ,
       ],
+      [, , , , , ,],
       [
-        { weekday: "MONDAY", title: "Mind on Autopilot", completed: false },
+        {
+          weekday: "MONDAY",
+          title: "The Negativity Spiral",
+          completed: true,
+        },
         ,
         ,
         ,
